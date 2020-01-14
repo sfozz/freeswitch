@@ -18,4 +18,23 @@ $(IKS_LA): $(IKS_BUILDDIR) $(IKS_DIR) $(IKS_DIR)/.update
 	@cd $(IKS_BUILDDIR) && $(MAKE)
 	@$(TOUCH_TARGET)
 
-SUBDIRS=. test
+noinst_PROGRAMS = test/test_iks test/test_nlsml test/test_srgs
+
+test_test_iks_SOURCES = test/test_iks.c
+test_test_iks_CFLAGS = $(AM_CFLAGS) -I. -I$(switch_builddir)/libs/iksemel/include $(PCRE_CFLAGS)
+test_test_iks_LDFLAGS = $(AM_LDFLAGS) -avoid-version -no-undefined $(freeswitch_LDFLAGS) $(switch_builddir)/libfreeswitch.la $(CORE_LIBS) $(APR_LIBS)
+test_test_iks_LDADD = mod_rayo.la
+
+test_test_nlsml_SOURCES = test/test_nlsml.c
+test_test_nlsml_CFLAGS = $(AM_CFLAGS) -I. -I$(switch_builddir)/libs/iksemel/include $(PCRE_CFLAGS)
+test_test_nlsml_LDFLAGS = $(AM_LDFLAGS) -avoid-version -no-undefined $(freeswitch_LDFLAGS) $(switch_builddir)/libfreeswitch.la $(CORE_LIBS) $(APR_LIBS)
+test_test_nlsml_LDADD = mod_rayo.la
+
+test_test_srgs_SOURCES = test/test_srgs.c
+test_test_srgs_CFLAGS = $(AM_CFLAGS) -I. -I$(switch_builddir)/libs/iksemel/include $(PCRE_CFLAGS)
+test_test_srgs_LDFLAGS = $(AM_LDFLAGS) -avoid-version -no-undefined $(freeswitch_LDFLAGS) $(switch_builddir)/libfreeswitch.la $(CORE_LIBS) $(APR_LIBS)
+test_test_srgs_LDADD = mod_rayo.la
+
+
+TESTS = $(noinst_PROGRAMS)
+

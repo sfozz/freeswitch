@@ -23,4 +23,12 @@ mod_lua_wrap.cpp: mod_lua_extra.c
 	echo "#include \"mod_lua_extra.c\"" >> mod_lua_wrap.cpp
 	patch -s -p0 -i hack.diff
 
-SUBDIRS=. test
+noinst_PROGRAMS = test/test_mod_lua
+
+test_test_mod_lua_SOURCES = test/test_mod_lua.c
+test_test_mod_lua_CFLAGS = $(AM_CFLAGS) -I.
+test_test_mod_lua_LDFLAGS = $(AM_LDFLAGS) -avoid-version -no-undefined $(freeswitch_LDFLAGS) $(switch_builddir)/libfreeswitch.la $(CORE_LIBS) $(APR_LIBS)
+test_test_mod_lua_LDADD = mod_lua.la
+
+TESTS = $(noinst_PROGRAMS)
+
