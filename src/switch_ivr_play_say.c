@@ -2711,10 +2711,10 @@ SWITCH_DECLARE(switch_status_t) switch_ivr_speak_text_handle(switch_core_session
 		tp = tmp;
 		for (p = text; p && *p; p++) {
 			if (*p == '*') {
-				strncat(tp, star, starlen);
+				snprintf(tp + strlen(tp), sizeof(tp) - strlen(tp), "%s", star);
 				tp += starlen;
 			} else if (*p == '#') {
-				strncat(tp, pound, poundlen);
+				snprintf(tp + strlen(tp), sizeof(tp) - strlen(tp), "%s", pound);
 				tp += poundlen;
 			} else {
 				*tp++ = *p;

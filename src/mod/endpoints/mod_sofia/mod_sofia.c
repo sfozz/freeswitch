@@ -4370,7 +4370,7 @@ SWITCH_STANDARD_API(sofia_function)
 	            switch_regex_free(mod_sofia_globals.filter_re);
 	        } else {
 	        	mod_sofia_globals.filtering = SWITCH_TRUE;
-	            strncpy( mod_sofia_globals.filter_expression, argv[1], sizeof(mod_sofia_globals.filter_expression) );
+	            snprintf( mod_sofia_globals.filter_expression, sizeof(mod_sofia_globals.filter_expression), "%s", argv[1] );
 	        	mod_sofia_globals.filter_re = switch_regex_compile( argv[1], flags, &errorptr, &erroffset, tables );
 	        	if (errorptr) {
 	        		switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_ERROR, "COMPILE ERROR: %d [%s][%s]\n", erroffset, errorptr, argv[1]);
@@ -5748,7 +5748,7 @@ void general_event_handler(switch_event_t *event)
 				switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "EVENT_TRAP: IP change detected\n");
 				switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "IP change detected [%s]->[%s] [%s]->[%s]\n", old_ip4, new_ip4, old_ip6, new_ip6);
 
-				strncpy(mod_sofia_globals.guess_ip, new_ip4, sizeof(mod_sofia_globals.guess_ip));
+				snprintf(mod_sofia_globals.guess_ip, sizeof(mod_sofia_globals.guess_ip), "%s", new_ip4);
 
 				switch_mutex_lock(mod_sofia_globals.hash_mutex);
 				if (mod_sofia_globals.profile_hash) {
